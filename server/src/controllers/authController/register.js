@@ -20,8 +20,6 @@ const {
 } = require("../../repositories/userRepository");
 
 module.exports = async (req, res) => {
-  console.log(req.body);
-  console.log("user data",req.userData?.roleId);
   try {
     const newUser = {
       username: req.body.username,

@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Categories.init(
     {
-      role: {
+      category: {
         type: DataTypes.STRING,
       },
     },
