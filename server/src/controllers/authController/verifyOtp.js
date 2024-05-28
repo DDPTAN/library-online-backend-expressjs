@@ -70,6 +70,7 @@ module.exports = async (req, res) => {
     // send response
     successResponse({
       response: res,
+      message: "Email has been verified",
       status: httpStatus.OK,
       data: singleUserResponse(updatedUser),
     });

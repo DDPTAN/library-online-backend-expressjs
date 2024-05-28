@@ -33,7 +33,7 @@ exports.validateCreateUserRequest = (userData) => {
     password: joi.string().required(),
     phone: joi
       .string()
-      .regex(/^\d{10,13}$/)
+      .regex(/^\d{11,12}$/)
       .required(),
   });
 
@@ -55,7 +55,7 @@ exports.validateUpdateUserRequest = (userData) => {
     password: joi.string(),
     phone: joi
       .string()
-      .regex(/^\d{11,13}$/),
+      .regex(/^\d{11,12}$/),
     gender: joi.string().allow(null, ""),
     address: joi.string().allow(null, ""),
     roleId: joi.number(),
