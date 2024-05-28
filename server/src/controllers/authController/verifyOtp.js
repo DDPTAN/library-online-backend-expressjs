@@ -40,12 +40,14 @@ module.exports = async (req, res) => {
     }
 
     // get hashed otp from redis
-    const { data: hashedOtp, error: errGetOtp } = await getRedisValue(
+    const { data: redisData, error: errGetOtp } = await getRedisValue(
       req.body.email
     );
     if (errGetOtp) {
       throw new Error(errGetOtp);
     }
+
+    const hashedOtp = redisData ? redisData.value : null;
 
     // validate otp token
     if (!hashedOtp) {
@@ -54,7 +56,6 @@ module.exports = async (req, res) => {
       throw error;
     } else {
       const isOtpValid = await comparePassword(hashedOtp, req.body.otp);
-
       if (!isOtpValid) {
         const error = new Error("OTP token is not valid");
         error.status = httpStatus.BAD_REQUEST;

@@ -16,7 +16,7 @@ exports.sendVerificationEmail = async (user, token) => {
                 <meta charset="UTF-8" />
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <title>Nutech E-Wallet</title>
+                <title>Library Online</title>
               </head>
               <body>
                 <table
@@ -64,12 +64,12 @@ exports.sendVerificationEmail = async (user, token) => {
                                       <tr>
                                         <td align="center">
                                           <div>
-                                            // <img 
-                                            //   src="https://res.cloudinary.com/dixxnrj9b/image/upload/v1713321236/e-wallet/nutech_jmwy1h.png"
-                                            //   alt="Nutech E-Wallet"
-                                            //   class="CToWUd"
-                                            //   data-bit="iit"
-                                            // />
+                                            <img 
+                                              src="https://res.cloudinary.com/dixxnrj9b/image/upload/v1713321236/e-wallet/nutech_jmwy1h.png"
+                                              alt="Library Online"
+                                              class="CToWUd"
+                                              data-bit="iit"
+                                            />
                                           </div>
                                         </td>
                                       </tr>
@@ -89,7 +89,7 @@ exports.sendVerificationEmail = async (user, token) => {
                                             "
                                           >
                                             <span class="il">Verify</span> your email to
-                                            Register with <b>Nutech E-Wallet</b>
+                                            Register with <b>Library Online</b>
                                           </h1>
                                         </td>
                                       </tr>
@@ -120,7 +120,7 @@ exports.sendVerificationEmail = async (user, token) => {
                                       line-height: 24px;
                                     "
                                   >
-                                  To complete the registration process, please enter the OTP code below in your Nutech E-Wallet application :
+                                  To complete the registration process, please enter the OTP code below in your Library Online application :
                                   </p>
                                   <br />
                                   <table

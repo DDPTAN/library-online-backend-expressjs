@@ -35,11 +35,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         unique: true,
       },
-      isPhoneVerified: DataTypes.BOOLEAN,
       gender: DataTypes.STRING,
       address: DataTypes.TEXT,
       photo: DataTypes.STRING,
-      pin: DataTypes.STRING,
       roleId: DataTypes.INTEGER,
     },
     {

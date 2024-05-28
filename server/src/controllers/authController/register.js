@@ -20,6 +20,8 @@ const {
 } = require("../../repositories/userRepository");
 
 module.exports = async (req, res) => {
+  console.log(req.body);
+  console.log("user data",req.userData?.roleId);
   try {
     const newUser = {
       username: req.body.username,
@@ -31,15 +33,12 @@ module.exports = async (req, res) => {
     /**
      * user not logged in only can register as user
      * admin only can register new user as user or admin
-     * superadmin can register new user with any role
      */
-    if (!req.userData?.roleId) {
+    if (!req.body?.roleId) {
       newUser.roleId = 3;
-    } else if (req.userData?.roleId == 2 && req.body.roleId != 1) {
+    } else {
       newUser.roleId = req.body.roleId;
-    } else if (req.userData?.roleId == 1) {
-      newUser.roleId = req.body.roleId;
-    }
+    } 
 
     const error = validateCreateUserRequest(newUser);
     if (error) {
