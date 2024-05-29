@@ -26,15 +26,16 @@ module.exports = async (req, res) => {
     }
 
     // create category
-    const { data: categoryData, error: errorCreateNewUser } = await createCategory(newCategory);
-    if (errorCreateNewUser) {
-      const error = new Error(errorCreateNewUser);
+    const { data: categoryData, error: errorCreateNewCategory } =
+      await createCategory(newCategory);
+    if (errorCreateNewCategory) {
+      const error = new Error(errorCreateNewCategory);
       error.status = httpStatus.INTERNAL_SERVER_ERROR;
       throw error;
     }
 
     const { data: category, error: errorGetCategory } = await getCategory(
-        categoryData.id
+      categoryData.id
     );
 
     if (errorGetCategory) {

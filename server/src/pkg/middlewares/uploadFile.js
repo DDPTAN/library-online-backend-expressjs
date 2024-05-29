@@ -54,28 +54,24 @@ exports.uploadPhoto = async (req, res, next) => {
   });
 };
 
-const diskStorageFile = multer.diskStorage({
-  // konfigurasi lokasi penyimpanan file
+const diskStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../../../uploads/book"));
+    const destinationPath = file.fieldname.startsWith('image') ? "../../../uploads/book/image" : "../../../uploads/book/file";
+    cb(null, path.join(__dirname, destinationPath));
   },
-  // konfigurasi penamaan file yang unik
   filename: function (req, file, cb) {
-    let fileName = `file-${new Date().getTime()}`;
-    cb(null, fileName + path.extname(file.originalname));
+    const prefix = file.fieldname.startsWith('image') ? 'image-' : 'file-';
+    cb(null, prefix + new Date().getTime() + path.extname(file.originalname));
   },
 });
 
-const uploadFile = multer({
-  storage: diskStorageFile,
+const upload = multer({
+  storage: diskStorage,
   limits: { fileSize: 100 * 1024 * 1024 }, // 100MB (dalam byte)
   fileFilter: (req, file, cb) => {
     if (
-      file.mimetype !== "image/png" &&
-      file.mimetype !== "image/jpg" &&
-      file.mimetype !== "image/jpeg" &&
-      file.mimetype !== "image/webp" &&
-      file.mimetype !== "application/pdf"
+      (file.fieldname.startsWith('image') && !['image/png', 'image/jpg', 'image/jpeg', 'image/webp', 'image/gif'].includes(file.mimetype)) ||
+      (file.fieldname.startsWith('file') && !['application/pdf'].includes(file.mimetype))
     ) {
       return cb(new Error("Format not allowed!"));
     } else {
@@ -84,27 +80,8 @@ const uploadFile = multer({
   },
 });
 
-exports.uploadSingleBook = async (req, res, next) => {
-  uploadFile.single("book")(req, res, function (err) {
-    try {
-      if (err instanceof multer.MulterError) {
-        throw err;
-      } else if (err) {
-        throw err;
-      }
-
-      next();
-    } catch (error) {
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
-        status: httpStatus.INTERNAL_SERVER_ERROR,
-        message: error.message,
-      });
-    }
-  });
-};
-
-exports.uploadMultipleBook = async (req, res, next) => {
-  uploadFile.array("books")(req, res, function (err) {
+exports.uploadFile = async (req, res, next) => {
+  upload.fields([{ name: 'image', maxCount: 1 }, { name: 'file', maxCount: 1 }])(req, res, function (err) {
     try {
       if (err instanceof multer.MulterError) {
         throw err;
