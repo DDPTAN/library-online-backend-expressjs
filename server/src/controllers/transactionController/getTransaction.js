@@ -1,15 +1,17 @@
 const httpStatus = require("http-status");
 
-const { getCategory } = require("../../repositories/categoryRepository");
+const { getTransaction } = require("../../repositories/transactionRepository");
 const {
   successResponse,
   errorResponse,
 } = require("../../serializers/responseSerializer");
-const { singleCategoryResponse } = require("../../serializers/categorySerializer");
+const {
+  singleTransactionResponse,
+} = require("../../serializers/transactionSerializer");
 
 module.exports = async (req, res) => {
   try {
-    const { data: category, error } = await getCategory(req.params.id);
+    const { data: transaction, error } = await getTransaction(req.params.id);
     if (error) {
       const errors = new Error(error);
       errors.status = httpStatus.NOT_FOUND;
@@ -19,7 +21,7 @@ module.exports = async (req, res) => {
     successResponse({
       response: res,
       status: httpStatus.OK,
-      data: singleCategoryResponse(category),
+      data: singleTransactionResponse(transaction),
     });
   } catch (error) {
     errorResponse({

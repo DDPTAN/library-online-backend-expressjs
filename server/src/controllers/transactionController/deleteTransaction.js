@@ -1,12 +1,12 @@
 const httpStatus = require("http-status");
 
 const {
-  getCategory,
-  deleteCategory,
-} = require("../../repositories/categoryRepository");
+  getTransaction,
+  deleteTransaction,
+} = require("../../repositories/transactionRepository");
 const {
-  singleCategoryResponse,
-} = require("../../serializers/categorySerializer");
+  singleTransactionResponse,
+} = require("../../serializers/transactionSerializer");
 const {
   successResponse,
   errorResponse,
@@ -14,17 +14,17 @@ const {
 
 module.exports = async (req, res) => {
   try {
-    const { data: category, error } = await getCategory(req.params.id);
+    const { data: transaction, error } = await getTransaction(req.params.id);
     if (error) {
       const errors = new Error(error);
       errors.status = httpStatus.NOT_FOUND;
       throw errors;
     }
 
-    const { data: categoryDeleted, error: errorOnDeleteCategory } =
-      await deleteCategory(category);
-    if (errorOnDeleteCategory) {
-      const errors = new Error(errorOnDeleteCategory);
+    const { data: transactionDeleted, error: errorOnDeleteTransaction } =
+      await deleteTransaction(transaction);
+    if (errorOnDeleteTransaction) {
+      const errors = new Error(errorOnDeleteTransaction);
       errors.status = httpStatus.INTERNAL_SERVER_ERROR;
       throw errors;
     }
@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
     successResponse({
       response: res,
       status: httpStatus.OK,
-      data: singleCategoryResponse(categoryDeleted),
+      data: singleTransactionResponse(transactionDeleted),
     });
   } catch (error) {
     errorResponse({

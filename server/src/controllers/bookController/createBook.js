@@ -55,7 +55,6 @@ module.exports = async (req, res) => {
     if (categoryId.length > 0) {
       const bookCategoryData = categoryId
         .map((item) => {
-          console.log(item);
           const categoryIdInt = parseInt(item);
           if (!isNaN(categoryIdInt)) {
             return { idBook: bookData.id, idCategory: categoryIdInt };
