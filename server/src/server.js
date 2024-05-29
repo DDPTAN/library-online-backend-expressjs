@@ -12,14 +12,13 @@ const customLogger = require("./pkg/middlewares/logger");
 // socket io
 // const { Server } = require("socket.io");
 
-
 // create instance of express
 const app = express();
 
 // Inisialisasi server HTTP
 const server = http.createServer(app);
 
-// const io = new Server(server, { 
+// const io = new Server(server, {
 //   cors: {
 //     origin: process.env.SOCKET_CLIENT, // define client origin if both client and server have different origin
 //     methods: ["GET", "POST"],
