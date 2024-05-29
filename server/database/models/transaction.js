@@ -33,6 +33,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         allowNull: false,
       },
+      transactionType: DataTypes.STRING,
+      totalBook: DataTypes.INTEGER,
+      loanDate: DataTypes.DATE,
+      returnDate: DataTypes.DATE,
+      loanMaximum: DataTypes.DATE,
       isStatus: DataTypes.BOOLEAN,
     },
     {

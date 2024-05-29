@@ -125,11 +125,33 @@ exports.createTransaction = async (transaction) => {
   const response = { data: null, error: null };
 
   try {
+    const book = await Books.findOne({
+      where: { id: transaction.idBook },
+    });
+
+    if (!book) {
+      throw new Error("Book not found");
+    }
+
+    const updatedQuantity = book.qty - transaction.totalBook;
+    if (updatedQuantity < 0) {
+      throw new Error("Not enough books in stock");
+    }
+
+    // Only create transaction if there are enough books in stock
     response.data = await Transactions.create({
       idBook: transaction.idBook,
       idUser: transaction.idUser,
+      transactionType: transaction.transactionType,
+      totalBook: transaction.totalBook,
+      loanDate: transaction.loanDate,
+      returnDate: transaction.returnDate,
+      loadMaximum: transaction.loadMaximum,
       isStatus: transaction.isStatus,
     });
+
+    // Update the quantity in the database
+    await Books.update({ qty: updatedQuantity }, { where: { id: book.id } });
   } catch (error) {
     response.error = `error on create data : ${error.message}`;
   }
@@ -137,11 +159,28 @@ exports.createTransaction = async (transaction) => {
   return response;
 };
 
+
 exports.updateTransaction = async (transaction) => {
   const response = { data: null, error: null };
 
   try {
     response.data = await transaction.save();
+
+    const book = await Books.findOne({
+      where: { id: transaction.idBook },
+    });
+
+    if (book) {
+      if (!transaction.isStatus) {
+        const updatedQuantity = book.qty + transaction.totalBook;
+        await Books.update(
+          { qty: updatedQuantity },
+          { where: { id: book.id } }
+        );
+      }
+    } else {
+      throw new Error("Book not found");
+    }
   } catch (error) {
     response.error = `error on update data : ${error.message}`;
   }

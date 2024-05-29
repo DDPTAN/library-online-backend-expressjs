@@ -28,6 +28,24 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
+      transaction_type: {
+        type: Sequelize.STRING
+      },
+      total_book: {
+        type: Sequelize.INTEGER
+      },
+      loan_date: {
+        type: Sequelize.DATE,
+        defaultValue: new Date(),
+      },
+      return_date: {
+        type: Sequelize.DATE,
+        defaultValue: new Date(),
+      },
+      loan_maximum: {
+        type: Sequelize.DATE,
+        defaultValue: new Date(),
+      },
       is_status: {
         type: Sequelize.BOOLEAN
       },

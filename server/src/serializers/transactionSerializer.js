@@ -10,11 +10,16 @@ exports.singleTransactionResponse = (transactionData) => {
 
   return {
     id: transaction.id,
-    idBook: transaction.idBook,
     idUser: transaction.idUser,
-    isStatus: transaction.isStatus,
     user: transaction.user,
+    idBook: transaction.idBook,
     book: transaction.book,
+    transactionType: transaction.transactionType,
+    totalBook: transaction.totalBook,
+    loanDate: transaction.loanDate,
+    returnDate: transaction.returnDate,
+    loanMaximum: transaction.loanMaximum,
+    isStatus: transaction.isStatus,
   };
 };
 
@@ -28,6 +33,11 @@ exports.validateCreateTransactionRequest = (transactionData) => {
   const schema = joi.object({
     idBook: joi.number().required(),
     idUser: joi.string().required(),
+    transactionType: joi.string().required(),
+    totalBook: joi.number().required(),
+    loanDate: joi.date().iso().required(),
+    returnDate: joi.date().iso().required(),
+    loanMaximum: joi.date().iso().required(),
     isStatus: joi.boolean().required(),
   });
 

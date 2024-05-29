@@ -14,10 +14,18 @@ const {
 
 module.exports = async (req, res) => {
   try {
+    const currentDate = new Date();
+    const returnDate = new Date(currentDate.getTime() + 120000);
+
     const newTransaction = {
       idBook: req.body.idBook,
       idUser: req.userData.id,
-      isStatus: req.body.isStatus,
+      transactionType: req.body.transactionType,
+      totalBook: req.body.totalBook,
+      loanDate: currentDate,
+      returnDate: returnDate,
+      loanMaximum: returnDate,
+      isStatus: true,
     };
 
     const error = validateCreateTransactionRequest(newTransaction);

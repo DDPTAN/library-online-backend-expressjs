@@ -44,6 +44,41 @@ module.exports = async (req, res) => {
     }
 
     if (
+      req.body.transactionType !== undefined &&
+      req.body.transactionType !== transaction.transactionType
+    ) {
+      transaction.transactionType = req.body.transactionType;
+    }
+
+    if (
+      req.body.totalBook !== undefined &&
+      req.body.totalBook !== transaction.totalBook
+    ) {
+      transaction.totalBook = req.body.totalBook;
+    }
+
+    if (
+      req.body.loadDate !== undefined &&
+      req.body.loadDate !== transaction.loadDate
+    ) {
+      transaction.loadDate = req.body.loadDate;
+    }
+
+    if (
+      req.body.returnDate !== undefined &&
+      req.body.returnDate !== transaction.returnDate
+    ) {
+      transaction.returnDate = req.body.returnDate;
+    }
+
+    if (
+      req.body.loanMaximum !== undefined &&
+      req.body.loanMaximum !== transaction.loanMaximum
+    ) {
+      transaction.loanMaximum = req.body.loanMaximum;
+    }
+
+    if (
       req.body.isStatus !== undefined &&
       req.body.isStatus !== transaction.isStatus
     ) {
