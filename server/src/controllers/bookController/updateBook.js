@@ -80,13 +80,6 @@ module.exports = async (req, res) => {
       book.qty = req.body.qty;
     }
 
-    if (
-      req.body.isAvaible !== undefined &&
-      req.body.isAvaible !== book.isAvaible
-    ) {
-      book.isAvaible = req.body.isAvaible;
-    }
-
     await BookCategories.destroy({
       where: {
         idBook: req.params.id,

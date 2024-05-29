@@ -31,7 +31,6 @@ module.exports = async (req, res) => {
       description: req.body.description,
       image: imageUrlGenerator(req, req.files["image"][0].filename),
       file: fileUrlGenerator(req, req.files["file"][0].filename),
-      isAvaible: req.body.isAvaible,
       qty: req.body.qty,
     };
 

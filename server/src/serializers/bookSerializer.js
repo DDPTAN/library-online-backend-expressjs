@@ -16,7 +16,6 @@ exports.singleBookResponse = (bookData) => {
     description: book.description,
     image: book.image,
     file: book.file,
-    isAvaible: book.isAvaible,
     qty: book.qty,
     categories: book.categories,
   };
@@ -36,7 +35,6 @@ exports.validateCreateBookRequest = (bookData) => {
     pages: joi.number().required(),
     author: joi.string().required(),
     description: joi.string().required(),
-    isAvaible: joi.boolean().required(),
     qty: joi.number().required(),
   });
 
@@ -59,7 +57,6 @@ exports.validateUpdateBookRequest = (bookData) => {
     pages: joi.number().required(),
     author: joi.string().required(),
     description: joi.string().required(),
-    isAvaible: joi.boolean().required(),
     qty: joi.number().required(),
   });
 

@@ -39,7 +39,6 @@ module.exports = (sequelize, DataTypes) => {
       image: DataTypes.STRING,
       file: DataTypes.STRING,
       qty: DataTypes.INTEGER,
-      isAvaible: DataTypes.BOOLEAN,
     },
     {
       sequelize,

@@ -88,7 +88,6 @@ exports.createBook = async (book) => {
       description: book.description,
       image: book.image,
       file: book.file,
-      isAvaible: book.isAvaible,
       qty: book.qty,
     });
   } catch (error) {

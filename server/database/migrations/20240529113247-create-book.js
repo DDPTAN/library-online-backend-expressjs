@@ -38,9 +38,6 @@ module.exports = {
       qty: {
         type: Sequelize.INTEGER,
       },
-      is_avaible: {
-        type: Sequelize.BOOLEAN,
-      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,

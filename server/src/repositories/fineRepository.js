@@ -1,7 +1,7 @@
-const { Transactions, Users, Books } = require("../../database/models");
+const { Fines, Users, Books } = require("../../database/models");
 // ---------------------------------------------------------
 
-exports.getTransactionsByAdmin = async (
+exports.getFinesByAdmin = async (
   offset = 0,
   limit = 10,
   filter = {}
@@ -9,7 +9,7 @@ exports.getTransactionsByAdmin = async (
   const response = { data: null, error: null, count: 0 };
 
   try {
-    response.data = await Transactions.findAll({
+    response.data = await Fines.findAll({
       offset: offset,
       limit: limit,
       where: filter,
@@ -30,10 +30,10 @@ exports.getTransactionsByAdmin = async (
       attributes: { exclude: ["createdAt", "updatedAt", "deletedAt"] },
     });
     if (!response.data) {
-      throw new Error("transactions data not found");
+      throw new Error("fines data not found");
     }
 
-    response.count = await Transactions.count({
+    response.count = await Fines.count({
       where: filter,
     });
   } catch (error) {
@@ -43,7 +43,7 @@ exports.getTransactionsByAdmin = async (
   return response;
 };
 
-exports.getTransactionsByUser = async (
+exports.getFinesByUser = async (
   userId,
   offset = 0,
   limit = 10,
@@ -52,7 +52,7 @@ exports.getTransactionsByUser = async (
   const response = { data: null, error: null, count: 0 };
 
   try {
-    response.data = await Transactions.findAll({
+    response.data = await Fines.findAll({
       offset: offset,
       limit: limit,
       where: { ...filter, idUser: userId },
@@ -73,10 +73,10 @@ exports.getTransactionsByUser = async (
       attributes: { exclude: ["createdAt", "updatedAt", "deletedAt"] },
     });
     if (!response.data) {
-      throw new Error("transactions data not found");
+      throw new Error("fines data not found");
     }
 
-    response.count = await Transactions.count({
+    response.count = await Fines.count({
       where: { ...filter, idUser: userId },
     });
   } catch (error) {
@@ -86,11 +86,11 @@ exports.getTransactionsByUser = async (
   return response;
 };
 
-exports.getTransaction = async (transactionId) => {
+exports.getFine = async (transactionId) => {
   const response = { data: null, error: null };
 
   try {
-    response.data = await Transactions.findOne({
+    response.data = await Fines.findOne({
       where: {
         id: transactionId,
       },
@@ -112,7 +112,7 @@ exports.getTransaction = async (transactionId) => {
     });
 
     if (!response.data) {
-      throw new Error(`transaction not found`);
+      throw new Error(`fine not found`);
     }
   } catch (error) {
     response.error = `error on get data : ${error.message}`;
@@ -121,37 +121,18 @@ exports.getTransaction = async (transactionId) => {
   return response;
 };
 
-exports.createTransaction = async (transaction) => {
+exports.createFine = async (fine) => {
   const response = { data: null, error: null };
 
   try {
-    const book = await Books.findOne({
-      where: { id: transaction.idBook },
+    response.data = await Fines.create({
+      idBook: fine.idBook,
+      idUser: fine.idUser,
+      totalDay: fine.totalDay,
+      totalFine: fine.totalFine,
+      status: fine.status,
+      token: fine.token,
     });
-
-    if (!book) {
-      throw new Error("Book not found");
-    }
-
-    const updatedQuantity = book.qty - transaction.totalBook;
-    if (updatedQuantity < 0) {
-      throw new Error("Not enough books in stock");
-    }
-
-    // Only create transaction if there are enough books in stock
-    response.data = await Transactions.create({
-      idBook: transaction.idBook,
-      idUser: transaction.idUser,
-      transactionType: transaction.transactionType,
-      totalBook: transaction.totalBook,
-      loanDate: transaction.loanDate,
-      returnDate: transaction.returnDate,
-      loadMaximum: transaction.loadMaximum,
-      isStatus: transaction.isStatus,
-    });
-
-    // Update the quantity in the database
-    await Books.update({ qty: updatedQuantity }, { where: { id: book.id } });
   } catch (error) {
     response.error = `error on create data : ${error.message}`;
   }
@@ -159,27 +140,11 @@ exports.createTransaction = async (transaction) => {
   return response;
 };
 
-exports.updateTransaction = async (transaction) => {
+exports.updateFine = async (fine) => {
   const response = { data: null, error: null };
 
   try {
-    response.data = await transaction.save();
-
-    const book = await Books.findOne({
-      where: { id: transaction.idBook },
-    });
-
-    if (book) {
-      if (!transaction.isStatus) {
-        const updatedQuantity = book.qty + transaction.totalBook;
-        await Books.update(
-          { qty: updatedQuantity },
-          { where: { id: book.id } }
-        );
-      }
-    } else {
-      throw new Error("Book not found");
-    }
+    response.data = await fine.save();
   } catch (error) {
     response.error = `error on update data : ${error.message}`;
   }
@@ -187,11 +152,11 @@ exports.updateTransaction = async (transaction) => {
   return response;
 };
 
-exports.deleteTransaction = async (transaction) => {
+exports.deleteFine = async (fine) => {
   const response = { data: null, error: null };
 
   try {
-    response.data = await transaction.destroy();
+    response.data = await fine.destroy();
   } catch (error) {
     response.error = `error on delete data : ${error.message}`;
   }
