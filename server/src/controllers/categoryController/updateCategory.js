@@ -58,6 +58,7 @@ module.exports = async (req, res) => {
 
     successResponse({
       response: res,
+      message: "category successfully updated",
       status: httpStatus.OK,
       data: singleCategoryResponse(categoryUpdated),
     });

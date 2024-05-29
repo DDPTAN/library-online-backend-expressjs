@@ -1,7 +1,7 @@
 const httpStatus = require("http-status");
 
 const {
-  getCategories,
+  getCategory,
   deleteCategory,
 } = require("../../repositories/categoryRepository");
 const {
@@ -14,7 +14,7 @@ const {
 
 module.exports = async (req, res) => {
   try {
-    const { data: user, error } = await getCategories(req.params.id);
+    const { data: user, error } = await getCategory(req.params.id);
     if (error) {
       const errors = new Error(error);
       errors.status = httpStatus.NOT_FOUND;

@@ -8,7 +8,7 @@ const {
   validateCreateCategoryRequest,
 } = require("../../serializers/categorySerializer");
 const {
-  getUser,
+  getCategory,
   createCategory,
 } = require("../../repositories/categoryRepository");
 
@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
       throw error;
     }
 
-    const { data: category, error: errorGetCategory } = await getUser(
+    const { data: category, error: errorGetCategory } = await getCategory(
         categoryData.id
     );
 
