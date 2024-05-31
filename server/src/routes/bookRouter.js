@@ -2,10 +2,10 @@ const router = require("express").Router();
 
 const bookController = require("../controllers/bookController");
 const { uploadFile } = require("../pkg/middlewares/uploadFile");
-const { adminAuth } = require("../pkg/middlewares/auth");
+const { userAuth, adminAuth } = require("../pkg/middlewares/auth");
 
-router.get("/books", adminAuth, bookController.getBooks);
-router.get("/book/:id", adminAuth, bookController.getBook);
+router.get("/books", userAuth, bookController.getBooks);
+router.get("/book/:id", userAuth, bookController.getBook);
 router.post("/book", adminAuth, uploadFile, bookController.createBook);
 router.patch("/book/:id", adminAuth, uploadFile, bookController.updateBook);
 router.delete("/book/:id", adminAuth, bookController.deleteBook);

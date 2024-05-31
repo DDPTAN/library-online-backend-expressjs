@@ -55,7 +55,7 @@ module.exports = async (req, res) => {
 
     successResponse({
       response: res,
-      message: "Transaction successfully added",
+      message: "Transaction successfully (book successfully borrowed)",
       status: httpStatus.CREATED,
       data: transaction,
     });
