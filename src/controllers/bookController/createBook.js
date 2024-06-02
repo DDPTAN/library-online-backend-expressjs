@@ -76,7 +76,7 @@ module.exports = async (req, res) => {
 
     successResponse({
       response: res,
-      message: "Book successfully added",
+      message: "Book successfully created",
       status: httpStatus.CREATED,
       data: book,
     });

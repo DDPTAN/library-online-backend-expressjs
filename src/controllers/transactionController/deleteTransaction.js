@@ -31,6 +31,7 @@ module.exports = async (req, res) => {
 
     successResponse({
       response: res,
+      message: "Transaction successfully deleted",
       status: httpStatus.OK,
       data: singleTransactionResponse(transactionDeleted),
     });

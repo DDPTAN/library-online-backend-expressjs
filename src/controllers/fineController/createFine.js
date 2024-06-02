@@ -46,7 +46,7 @@ module.exports = async (req, res) => {
 
     successResponse({
       response: res,
-      message: "Fine successfully added",
+      message: "Fine successfully created",
       status: httpStatus.CREATED,
       data: fine,
     });

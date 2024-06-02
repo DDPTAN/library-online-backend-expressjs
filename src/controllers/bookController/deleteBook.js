@@ -34,6 +34,7 @@ module.exports = async (req, res) => {
 
     successResponse({
       response: res,
+      message: "Book successfully deleted",
       status: httpStatus.OK,
       data: singleBookResponse(bookDeleted),
     });

@@ -53,8 +53,8 @@ module.exports = async (req, res) => {
         id: user.id,
         username: user.username,
         email: user.email,
-        pin: user.pin,
-        roleId: user.roleId,
+        photo: user.photo,
+        role: user.role,
       },
       process.env.JWT_SECRET,
       {
@@ -66,7 +66,13 @@ module.exports = async (req, res) => {
     successResponse({
       response: res,
       status: httpStatus.OK,
-      data: { id: user.id, token: token },
+      data: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        token: token,
+      },
     });
   } catch (error) {
     errorResponse({

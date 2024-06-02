@@ -30,6 +30,7 @@ module.exports = async (req, res) => {
 
     successResponse({
       response: res,
+      message: "User successfully deleted",
       status: httpStatus.OK,
       data: singleUserResponse(userDeleted),
     });

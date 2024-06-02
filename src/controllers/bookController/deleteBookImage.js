@@ -23,6 +23,7 @@ module.exports = async (req, res) => {
 
     successResponse({
       response: res,
+      message: "Image book successfully deleted",
       status: httpStatus.OK,
       data: singleBookResponse(book),
     });

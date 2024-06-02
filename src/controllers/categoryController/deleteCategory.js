@@ -31,6 +31,7 @@ module.exports = async (req, res) => {
 
     successResponse({
       response: res,
+      message: "Category successfully deleted",
       status: httpStatus.OK,
       data: singleCategoryResponse(categoryDeleted),
     });

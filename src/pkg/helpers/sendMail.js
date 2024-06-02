@@ -65,8 +65,10 @@ exports.sendVerificationEmail = async (user, token) => {
                                         <td align="center">
                                           <div>
                                             <img 
-                                              src="https://res.cloudinary.com/dixxnrj9b/image/upload/v1713321236/e-wallet/nutech_jmwy1h.png"
+                                              src="https://res.cloudinary.com/dixxnrj9b/image/upload/v1717235493/library-online-management-system/logo-library-online_erva3r.png"
                                               alt="Library Online"
+                                              width="200px"
+                                              height="65px"
                                               class="CToWUd"
                                               data-bit="iit"
                                             />

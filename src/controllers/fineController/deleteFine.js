@@ -27,6 +27,7 @@ module.exports = async (req, res) => {
 
     successResponse({
       response: res,
+      message: "Fine successfully deleted",
       status: httpStatus.OK,
       data: singleFineResponse(fineDeleted),
     });

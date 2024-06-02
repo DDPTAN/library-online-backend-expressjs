@@ -124,7 +124,7 @@ module.exports = async (req, res) => {
 
     successResponse({
       response: res,
-      message: "book successfully updated",
+      message: "Book successfully updated",
       status: httpStatus.OK,
       data: singleBookResponse(bookUpdated),
     });
