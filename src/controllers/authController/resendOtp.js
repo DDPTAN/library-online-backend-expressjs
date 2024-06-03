@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
     const redisSetValErr = await setRedisValue(
       req.body.email,
       hashedOtp,
-      5 * 60
+      1 * 60
     );
     if (redisSetValErr) {
       throw new Error(redisSetValErr);

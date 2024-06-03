@@ -3,7 +3,7 @@ const httpStatus = require("http-status");
 const { hashPassword } = require("../../pkg/helpers/bcrypt");
 const { otpCodeGenerator } = require("../../pkg/helpers/otpCodeGenerator");
 const { sendVerificationEmail } = require("../../pkg/helpers/sendMail");
-const { setRedisValue } = require("../../pkg/helpers/redis");
+const { setRedisValue, getRedisValue } = require("../../pkg/helpers/redis");
 
 const {
   successResponse,
@@ -69,7 +69,7 @@ module.exports = async (req, res) => {
     const hashedOtp = await hashPassword(otp, 11);
 
     // store hashed otp in redis for 5 minutes
-    setRedisValue(user.email, hashedOtp, 5 * 60);
+    setRedisValue(user.email, hashedOtp, 1 * 60);
 
     // send otp code to email
     sendVerificationEmail(user, otp);
@@ -84,11 +84,22 @@ module.exports = async (req, res) => {
       throw errors;
     }
 
+    // get data user in redis
+    const { data: redisGetVal, error: errRedisGetVal } = await getRedisValue(
+      req.body.email
+    );
+    if (errRedisGetVal) {
+      throw new Error(errRedisGetVal);
+    }
+
     successResponse({
       response: res,
       message: "Register successfully",
       status: httpStatus.CREATED,
-      data: userRegistered,
+      data: {
+        ...singleUserResponse(userRegistered),
+        otp: redisGetVal,
+      },
     });
   } catch (error) {
     errorResponse({

@@ -146,7 +146,7 @@ exports.createTransaction = async (transaction) => {
       totalBook: transaction.totalBook,
       loanDate: transaction.loanDate,
       returnDate: transaction.returnDate,
-      loadMaximum: transaction.loadMaximum,
+      loanMaximum: transaction.loanMaximum,
       isStatus: transaction.isStatus,
     });
 
