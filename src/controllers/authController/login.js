@@ -9,6 +9,7 @@ const {
   errorResponse,
 } = require("../../serializers/responseSerializer");
 const { comparePassword } = require("../../pkg/helpers/bcrypt");
+const { singleRoleResponse } = require("../../serializers/roleSerializer");
 
 module.exports = async (req, res) => {
   try {
@@ -70,7 +71,7 @@ module.exports = async (req, res) => {
         username: user.username,
         email: user.email,
         photo: user.photo,
-        role: user.role,
+        role: singleRoleResponse(user.role),
         token: token,
       },
     });

@@ -8,6 +8,7 @@ exports.singleFineResponse = (fineData) => {
 
   return {
     id: fine.id,
+    idOrder: fine.idOrder,
     idUser: fine.idUser,
     user: fine.user,
     idBook: fine.idBook,

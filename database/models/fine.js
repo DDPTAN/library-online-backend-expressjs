@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Fines.init(
     {
+      idOrder: DataTypes.INTEGER,
       idBook: {
         type: DataTypes.INTEGER,
         allowNull: false,

@@ -86,13 +86,13 @@ exports.getFinesByUser = async (
   return response;
 };
 
-exports.getFine = async (transactionId) => {
+exports.getFine = async (fineId) => {
   const response = { data: null, error: null };
 
   try {
     response.data = await Fines.findOne({
       where: {
-        id: transactionId,
+        id: fineId,
       },
       include: [
         {
@@ -113,6 +113,27 @@ exports.getFine = async (transactionId) => {
 
     if (!response.data) {
       throw new Error(`fine not found`);
+    }
+  } catch (error) {
+    response.error = `error on get data : ${error.message}`;
+  }
+
+  return response;
+};
+
+exports.getFineOrderId = async (idOrder) => {
+  const response = { data: null, error: null };
+
+  try {
+    response.data = await Fines.findOne({
+      where: {
+        idOrder: idOrder,
+      },
+      attributes: { exclude: ["createdAt", "updatedAt", "deletedAt"] },
+    });
+
+    if (!response.data) {
+      throw new Error(`fine order id not found`);
     }
   } catch (error) {
     response.error = `error on get data : ${error.message}`;
@@ -163,3 +184,4 @@ exports.deleteFine = async (fine) => {
 
   return response;
 };
+
