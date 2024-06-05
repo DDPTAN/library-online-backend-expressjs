@@ -2,7 +2,7 @@ const httpStatus = require("http-status");
 const midtransClient = require("midtrans-client");
 
 const { getUser } = require("../../repositories/userRepository");
-const { getFine, getFineOrderId, updateFine } = require("../../repositories/fineRepository");
+const { getFine, updateFine } = require("../../repositories/fineRepository");
 const {
   validateUpdateFineRequest,
   singleFineResponse,
@@ -37,7 +37,7 @@ async function generateUniqueId() {
   return fineId;
 }
 
-exports.updateFine = async (req, res) => {
+module.exports = async (req, res) => {
   try {
     const idOrder = await generateUniqueId();
 
@@ -151,51 +151,5 @@ exports.updateFine = async (req, res) => {
       response: res,
       error: error,
     });
-  }
-};
-
-exports.notification = async (req, res) => {
-  try {
-    const statusResponse = await core.transaction.notification(req.body);
-    const orderId = statusResponse.order_id;
-    const fineStatus = statusResponse.transaction_status;
-    const fraudStatus = statusResponse.fraud_status;
-
-    const { data: fine, error: errorFindOrderId } = await getFineOrderId(orderId);
-    if (errorFindOrderId) {
-      const errors = new Error(errorFindOrderId);
-      errors.status = httpStatus.NOT_FOUND;
-      throw errors;
-    }
-
-    if (fineStatus == "capture") {
-      if (fraudStatus == "challenge") {
-        fine.status = "pending";
-      } else if (fraudStatus == "accept") {
-        fine.status = "success";
-      }
-    } else if (fineStatus == "settlement") {
-      fine.status = "success";
-    } else if (
-      fineStatus == "cancel" ||
-      fineStatus == "deny" ||
-      fineStatus == "expire"
-    ) {
-      fine.status = "failed";
-    } else if (fineStatus == "pending") {
-      fine.status = "pending";
-    }
-
-    const { error: errorOnUpdateFine } = await updateFine(fine);
-    if (errorOnUpdateFine) {
-      const errors = new Error(errorOnUpdateFine);
-      errors.status = httpStatus.INTERNAL_SERVER_ERROR;
-      throw errors;
-    }
-
-    res.status(200).send({ message: "Notification successfully processed" });
-  } catch (error) {
-    console.log(error);
-    res.status(500);
   }
 };

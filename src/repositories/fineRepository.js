@@ -129,6 +129,20 @@ exports.getFineOrderId = async (idOrder) => {
       where: {
         idOrder: idOrder,
       },
+      include: [
+        {
+          model: Users,
+          as: "user",
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "deletedAt", "password"],
+          },
+        },
+        {
+          model: Books,
+          as: "book",
+          attributes: { exclude: ["createdAt", "updatedAt", "deletedAt"] },
+        },
+      ],
       attributes: { exclude: ["createdAt", "updatedAt", "deletedAt"] },
     });
 
